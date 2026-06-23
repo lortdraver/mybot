@@ -54,14 +54,14 @@ async def handle_media(message: types.Message):
             await status_msg.delete()
 
     # ЛОГИКА ВИДЕО
-    elif text.startswith("видео:"):
+   elif text.startswith("видео:"):
         prompt = text.replace("видео:", "").strip()
         status_msg = await message.answer("🎬 Генерирую видео, это займет около минуты...")
         
         try:
             # Используем актуальную модель для видео
             output = replicate.run(
-                "wan-video/wan-2.1-14b:17112026", # Если эта версия устареет, возьмите новую с сайта Replicate
+                "cuuupid/cogvideox-5b:5b14e2c2c648efecc8d36c6353576552f8a124e690587212f8e8bb17ecda3d8c", # Если эта версия устареет, возьмите новую с сайта Replicate
                 input={
                     "prompt": prompt,
                     "aspect_ratio": "16:9"
