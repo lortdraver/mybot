@@ -54,7 +54,7 @@ async def handle_media(message: types.Message):
             await status_msg.delete()
 
     # ЛОГИКА ВИДЕО
-   elif text.startswith("видео:"):
+    elif text.startswith("видео:"):
         prompt = text.replace("видео:", "").strip()
         status_msg = await message.answer("🎬 Генерирую видео, это займет около минуты...")
         
