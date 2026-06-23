@@ -56,15 +56,20 @@ async def handle_media(message: types.Message):
     # ЛОГИКА ВИДЕО
     elif text.startswith("видео:"):
         prompt = text.replace("видео:", "").strip()
-        status_msg = await message.answer("🎬 Генерирую видео, подожди пару минут...")
+        status_msg = await message.answer("🎬 Генерирую видео, это займет около минуты...")
         
         try:
+            # Используем актуальную модель для видео
             output = replicate.run(
-                "cuuupid/cogvideox-5b:373c6838e55e51086095904838612185295c024523a6372064971c26cc88a6d6",
-                input={"prompt": prompt}
+                "wan-video/wan-2.1-14b:17112026", # Если эта версия устареет, возьмите новую с сайта Replicate
+                input={
+                    "prompt": prompt,
+                    "aspect_ratio": "16:9"
+                }
             )
             
-            # ИСПРАВЛЕНИЕ: Превращаем объект Replicate в прямую ссылку
+            # Превращаем результат в ссылку для Telegram
+            # Если это список, берем первый элемент и переводим в строку
             video_url = str(output[0]) if isinstance(output, list) else str(output)
             
             await bot.send_video(message.chat.id, video=video_url)
